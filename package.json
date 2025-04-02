@@ -9,17 +9,55 @@
   "categories": [
     "Other"
   ],
-  "activationEvents": [
-    "onLanguage:javascriptreact",
-    "onLanguage:typescriptreact"
-  ],
-  "main": "./dist/extension.js",
-  "contributes": {},
   "repository": {
     "url": "https://github.com/joao-pedro-braz/mdn-docs",
     "type": "git"
   },
   "publisher": "josaid",
+  "activationEvents": [
+    "onLanguage:javascriptreact",
+    "onLanguage:typescriptreact"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "configuration": {
+      "title": "MDN Docs",
+      "properties": {
+        "mdn-docs.enable": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable MDN Docs"
+        },
+        "mdn-docs.language": {
+          "type": "string",
+          "enum": [
+            "en-US",
+            "de",
+            "es",
+            "fr",
+            "ja",
+            "pt-BR",
+            "ru",
+            "zh-CN",
+            "zh-TW"
+          ],
+          "enumItemLabels": [
+            "English (US)",
+            "Deutsch",
+            "Español",
+            "Français",
+            "日本語",
+            "Português (do Brasil)",
+            "Русский",
+            "中文 (简体)",
+            "正體中文 (繁體)"
+          ],
+          "default": "en-US",
+          "description": "Language for MDN Docs"
+        }
+      }
+    }
+  },
   "scripts": {
     "vscode:prepublish": "npm run package",
     "compile": "npm run check-types && npm run lint && node esbuild.js",
@@ -47,5 +85,8 @@
     "eslint": "^9.23.0",
     "npm-run-all": "^4.1.5",
     "typescript": "^5.8.2"
+  },
+  "dependencies": {
+    "@xmldom/xmldom": "^0.9.8"
   }
 }

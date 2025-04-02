@@ -1,5 +1,7 @@
-import { MarkdownString, OutputChannel } from "vscode";
+import { MarkdownString, OutputChannel, workspace } from "vscode";
 import { CacheStorageService } from "./cache";
+import { EXTENSION_NAME, ExtensionSetting } from "./constants";
+import { DOMParser, MIME_TYPE, Node, XMLSerializer, type Element } from "@xmldom/xmldom";
 
 export class MdnDocsLoader {
     constructor(
@@ -17,8 +19,9 @@ export class MdnDocsLoader {
      */
     public async fetchHtmlElement(element: string): Promise<MarkdownString | undefined> {
         this.log(`Fetching docs for HTML element: ${element}`);
-        const url = `https://developer.mozilla.org/en-US/docs/Web/HTML/Element/${element}`;
-        const cacheKey = `mdn-docs-html-element-${element}`;
+        const language = this.getLanguage();
+        const url = `https://developer.mozilla.org/${language}/docs/Web/HTML/Element/${element}`;
+        const cacheKey = `mdn-docs-html-element-${element}-${language}`;
 
         try {
             const content = await this.cacheStorageService.getOrFetch(
@@ -41,8 +44,9 @@ export class MdnDocsLoader {
      */
     public async fetchGlobalAttribute(attribute: string): Promise<MarkdownString | undefined> {
         this.log(`Fetching docs for Global HTML attribute: ${attribute}`);
-        const url = `https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/${attribute}`;
-        const cacheKey = `mdn-docs-html-global-attribute-${attribute}`;
+        const language = this.getLanguage();
+        const url = `https://developer.mozilla.org/${language}/docs/Web/HTML/Global_attributes/${attribute}`;
+        const cacheKey = `mdn-docs-html-global-attribute-${attribute}-${language}`;
 
         try {
             const content = await this.cacheStorageService.getOrFetch(
@@ -65,8 +69,9 @@ export class MdnDocsLoader {
      */
     public async fetchElementAttribute(attribute: string): Promise<MarkdownString | undefined> {
         this.log(`Fetching docs for HTML element attribute: ${attribute}`);
-        const url = `https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/${attribute}`;
-        const cacheKey = `mdn-docs-html-element-attribute-${attribute}`;
+        const language = this.getLanguage();
+        const url = `https://developer.mozilla.org/${language}/docs/Web/HTML/Attributes/${attribute}`;
+        const cacheKey = `mdn-docs-html-element-attribute-${attribute}-${language}`;
 
         try {
             const content = await this.cacheStorageService.getOrFetch(
@@ -111,6 +116,15 @@ export class MdnDocsLoader {
     }
 
     /**
+     * Gets the language setting from the configuration.
+     * @returns The language setting from the configuration.
+     */
+    private getLanguage(): string {
+        const config = workspace.getConfiguration(EXTENSION_NAME)
+        return config.get(ExtensionSetting.language, "en-US") as string;
+    }
+
+    /**
      * Builds a MarkdownString from the fetched content.
      * @param content The content to build the MarkdownString from.
      * @param url The URL to append to the MarkdownString.
@@ -139,28 +153,36 @@ export class MdnDocsLoader {
     private extractDocumentation(html: string): string | undefined {
         this.log(`Extracting documentation from ${html.length} bytes of HTML`);
 
-
-        // Simple extraction - look for the main content
-        const mainContentMatch = html.match(/<div class="section-content">(.+?)<\/div>/s);
-        let content: string;
-        if (!mainContentMatch) {
-            this.log("Primary content pattern not found, trying alternative pattern");
-
-            // Fallback to another common pattern if the first one fails
-            const altMatch = html.match(/<section.+?>(.+?)<\/section>/s);
-            if (!altMatch) {
-                this.log("No content patterns matched");
-                return undefined;
+        const dom = new DOMParser({
+            onError: (error) => {
+                this.log(`DOMParser error: ${error}`);
             }
+        }).parseFromString(html, MIME_TYPE.HTML);
 
-            this.log("Alternative pattern matched, cleaning content");
-            content = this.cleanHtml(altMatch[1]);
-        } else {
-            this.log("Primary content pattern matched, cleaning content");
-            content = this.cleanHtml(mainContentMatch[1]);
+        // Try to find the main content section using DOM methods
+        const sectionContent = dom.getElementsByClassName("section-content")
+            .filter(element => element.tagName === 'div')[0];
+        if (sectionContent) {
+            this.log("Found section-content element, extracting content");
+            return this.cleanDocumentation(sectionContent);
         }
 
-        return content;
+        // Fallback to finding any section element
+        const section = dom.getElementsByTagName("section")[0];
+        if (section) {
+            this.log("Found section element, extracting content");
+            return this.cleanDocumentation(section);
+        }
+
+        // Try finding article content as another fallback
+        const article = dom.getElementsByTagName("article")[0];
+        if (article) {
+            this.log("Found article element, extracting content");
+            return this.cleanDocumentation(article);
+        }
+
+        this.log("No content elements found in the DOM");
+        return undefined;
     }
 
     /**
@@ -168,17 +190,39 @@ export class MdnDocsLoader {
      * @param html HTML content to clean.
      * @returns Cleaned text.
      */
-    private cleanHtml(html: string): string {
-        this.log(`Cleaning HTML content (${html.length} bytes)`);
-
-        // Normalize whitespace
-        let result = html
-            .replace(/\s+/g, ' ')
-            .trim();
+    private cleanDocumentation(document: Element): string {
+        this.log(`Cleaning HTML content`);
 
         // Replace HTML anchors href with a proper link to the MDN page
-        result = result.replace(/<a href="([^"]+)">/g, "<a href=\"https://developer.mozilla.org/$1\">");
+        const anchors = document.getElementsByTagName("a");
+        for (let i = 0; i < anchors.length; i++) {
+            const anchor = anchors[i];
+            const href = anchor.getAttribute("href");
+            if (href) {
+                anchor.setAttribute("href", `https://developer.mozilla.org${href}`);
+            }
+        }
 
+        // Remove non-allowed tags
+        const allowedTags = ['a', 'code', 'div', 'em', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'section', 'span', 'strong'];
+        let elementsToCheck = Array.from(document.childNodes);
+        while (elementsToCheck.length) {
+            const newElementsToCheck = [] as Node[];
+            for (let i = elementsToCheck.length - 1; i >= 0; i--) {
+                const element = elementsToCheck[i];
+                if (element.nodeType !== Node.ELEMENT_NODE) continue;
+
+                if ( !allowedTags.includes(element.nodeName.toLowerCase())) {
+                    element.parentNode?.removeChild?.(element);
+                    elementsToCheck.splice(i, 1);
+                }
+
+                newElementsToCheck.push(...Array.from(element.childNodes));
+            }
+            elementsToCheck = newElementsToCheck;
+        }
+
+        const result = new XMLSerializer().serializeToString(document);
         this.log(`Cleaned text is ${result.length} bytes`);
         return result;
     }
