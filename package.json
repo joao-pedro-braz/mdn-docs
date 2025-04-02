@@ -2,7 +2,7 @@
   "name": "mdn-docs",
   "displayName": "mdn-docs",
   "description": "MDN Docs for JSX/TSX",
-  "version": "0.0.1",
+  "version": "1.0.1",
   "engines": {
     "vscode": "^1.98.0"
   },
