@@ -1,71 +1,89 @@
-# mdn-docs README
+# MDN Docs for JSX/TSX
 
-This is the README for your extension "mdn-docs". After writing up a brief description, we recommend including the following sections.
+## Overview
+MDN Docs is a Visual Studio Code extension that provides instant MDN (Mozilla Developer Network) documentation when hovering over HTML elements and attributes in your JSX/TSX files. It helps React developers quickly access web documentation without leaving their editor.
 
 ## Features
+- Displays MDN documentation for JSX elements (like `<div>`, `<span>`, etc.)
+- Shows information for global HTML attributes (like `id`, `class`, `style`)
+- Provides documentation for element-specific attributes
+- Caches documentation locally for fast access and offline use
+- Works with both JavaScript React (.jsx) and TypeScript React (.tsx) files
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+## How It Works
+The extension detects when you're hovering over JSX elements or attributes, queries the TypeScript language server to determine what you're hovering over, then fetches and displays relevant documentation from MDN.
 
-For example if there is an image subfolder under your extension project workspace:
+## Installation
+1. Open VS Code
+2. Go to Extensions (Ctrl+Shift+X)
+3. Search for "MDN Docs for JSX/TSX"
+4. Click Install
 
-\!\[feature X\]\(images/feature-x.png\)
-
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+Or install using the VS Code Quick Open (Ctrl+P):
+```
+ext install josaid.mdn-docs
+```
 
 ## Requirements
+- Visual Studio Code 1.98.0 or newer
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+## Usage
+Simply hover over any HTML element or attribute in your JSX/TSX files:
 
-## Extension Settings
+- Hover over a tag name (like `<div>`) to see element documentation
+- Hover over an attribute (like `className` or `onClick`) to see attribute documentation
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
+The extension activates automatically for files with `.jsx` and `.tsx` extensions.
 
-For example:
+## Development
+Want to contribute to the extension?
 
-This extension contributes the following settings:
+### Prerequisites
+- Node.js
+- npm
+- Git
+- VS Code
 
-* `myExtension.enable`: Enable/disable this extension.
-* `myExtension.thing`: Set to `blah` to do something.
+### Setting Up Development Environment
+1. Clone the repository:
+   ```
+   git clone https://github.com/yourusername/mdn-docs.git
+   cd mdn-docs
+   ```
 
-## Known Issues
+2. Install dependencies:
+   ```
+   npm install
+   ```
 
-Calling out known issues can help limit users opening duplicate issues against your extension.
+3. Build the extension:
+   ```
+   npm run compile
+   ```
 
-## Release Notes
+4. Launch in debug mode:
+   - Press F5 in VS Code to launch a new window with your extension loaded
+   - Create/open a JSX/TSX file and hover over an element or attribute
 
-Users appreciate release notes as you update your extension.
+### Development Commands
+- `npm run watch` - Auto-compile changes during development
+- `npm run lint` - Run ESLint
+- `npm run test` - Run tests
+- `npm run package` - Package the extension for distribution
 
-### 1.0.0
+## Contributing
+Contributions are welcome! Please follow these steps:
 
-Initial release of ...
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-update`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-update`)
+5. Open a Pull Request
 
-### 1.0.1
+## Resources
+- [MDN Web Docs](https://developer.mozilla.org/)
+- [VS Code Extension API](https://code.visualstudio.com/api)
+- [React Documentation](https://reactjs.org/docs/getting-started.html)
 
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
-
----
-
-## Following extension guidelines
-
-Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
-
-* [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
-
-## Working with Markdown
-
-You can author your README using Visual Studio Code. Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux).
-* Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux).
-* Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets.
-
-## For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+## License
+This project is licensed under the MIT License - see the LICENSE file for details.
