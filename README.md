@@ -6,6 +6,8 @@
 
 Hover over elements and attributes in your JSX/TSX files to instantly get the information you need.
 
+![sample](assets/sample.gif)
+
 ## Getting Started
 
 Install by clicking `Install` on the extension page, or from the Extensions sidebar in VS Code by searching for "MDN Docs (JSX/TSX)".
