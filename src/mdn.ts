@@ -120,7 +120,7 @@ export class MdnDocsLoader {
      * @returns The language setting from the configuration.
      */
     private getLanguage(): string {
-        const config = workspace.getConfiguration(EXTENSION_NAME)
+        const config = workspace.getConfiguration(EXTENSION_NAME);
         return config.get(ExtensionSetting.language, "en-US") as string;
     }
 
@@ -210,7 +210,9 @@ export class MdnDocsLoader {
             const newElementsToCheck = [] as Node[];
             for (let i = elementsToCheck.length - 1; i >= 0; i--) {
                 const element = elementsToCheck[i];
-                if (element.nodeType !== Node.ELEMENT_NODE) continue;
+                if (element.nodeType !== Node.ELEMENT_NODE) {
+                    continue;
+                }
 
                 if ( !allowedTags.includes(element.nodeName.toLowerCase())) {
                     element.parentNode?.removeChild?.(element);
