@@ -1,89 +1,109 @@
-# MDN Docs for JSX/TSX
+# MDN Docs (JSX/TSX) &mdash; MDN Docs for JSX/TSX
 
-## Overview
-MDN Docs is a Visual Studio Code extension that provides instant MDN (Mozilla Developer Network) documentation when hovering over HTML elements and attributes in your JSX/TSX files. It helps React developers quickly access web documentation without leaving their editor.
+> Access **instant MDN documentation** directly within VS Code for HTML elements and attributes in your JSX/TSX files.
+
+[MDN Docs (JSX/TSX)](https://github.com/joao-pedro-braz/mdn-docs 'Open MDN Docs on GitHub') is a extension for Visual Studio Code that bridges the gap between MDN Docs and HTML elements in JSX.
+
+Hover over elements and attributes in your JSX/TSX files to instantly get the information you need.
+
+## Getting Started
+
+Install by clicking `Install` on the extension page, or from the Extensions sidebar in VS Code by searching for "MDN Docs (JSX/TSX)".
+
+- The extension automatically activates when working with JSX/TSX files.
+- No configuration required - it works out of the box!
 
 ## Features
-- Displays MDN documentation for JSX elements (like `<div>`, `<span>`, etc.)
-- Shows information for global HTML attributes (like `id`, `class`, `style`)
-- Provides documentation for element-specific attributes
-- Caches documentation locally for fast access and offline use
-- Works with both JavaScript React (.jsx) and TypeScript React (.tsx) files
 
-## How It Works
-The extension detects when you're hovering over JSX elements or attributes, queries the TypeScript language server to determine what you're hovering over, then fetches and displays relevant documentation from MDN.
+MDN Docs provides immediate access to official MDN documentation through three main features:
 
-## Installation
-1. Open VS Code
-2. Go to Extensions (Ctrl+Shift+X)
-3. Search for "MDN Docs for JSX/TSX"
-4. Click Install
+- [**HTML Element Documentation**](#html-element-documentation) &mdash; Hover over any HTML element in JSX/TSX to view its complete documentation including usage, examples, and browser compatibility.
 
-Or install using the VS Code Quick Open (Ctrl+P):
+- [**Global Attribute Documentation**](#global-attribute-documentation) &mdash; Immediately access information about global attributes that apply to all HTML elements, with details on their function and implementation.
+
+- [**Element-specific Attribute Documentation**](#element-specific-attribute-documentation) &mdash; Get specialized documentation for attributes that are specific to particular HTML elements, helping you use them correctly.
+
+## HTML Element Documentation
+
+Instantly see comprehensive information about any HTML element when you hover over it in your JSX/TSX files. Get details on proper usage, examples, and compatibility.
+
+```jsx
+function MyComponent() {
+  return (
+    <div>       {/* Hover over 'div' for documentation */}
+      <button>Click me</button>  {/* Hover over 'button' for documentation */}
+    </div>
+  );
+}
 ```
-ext install josaid.mdn-docs
+
+## Global Attribute Documentation
+
+Hover over any global HTML attribute to instantly see its documentation, including usage notes and browser compatibility information.
+
+```jsx
+function AccessibleComponent() {
+  return (
+    <div role="region" aria-label="Content section">
+      {/* Hover over 'role' or 'aria-label' to see their documentation */}
+      <p className="description">Text content</p>
+      {/* Hover over 'className' to understand the HTML 'class' attribute */}
+    </div>
+  );
+}
 ```
 
-## Requirements
-- Visual Studio Code 1.98.0 or newer
+## Element-specific Attribute Documentation
 
-## Usage
-Simply hover over any HTML element or attribute in your JSX/TSX files:
+Get detailed information about element-specific attributes by hovering over them in your code.
 
-- Hover over a tag name (like `<div>`) to see element documentation
-- Hover over an attribute (like `className` or `onClick`) to see attribute documentation
+```jsx
+function FormComponent() {
+  return (
+    <form onSubmit={handleSubmit}>
+      <input 
+        type="text"    {/* Hover over 'type' for input-specific documentation */}
+        placeholder="Enter your name"  {/* Hover over 'placeholder' */}
+        required       {/* Hover over 'required' */}
+      />
+      <button type="submit">Submit</button>
+    </form>
+  );
+}
+```
 
-The extension activates automatically for files with `.jsx` and `.tsx` extensions.
+## Configuration Options
 
-## Development
-Want to contribute to the extension?
+MDN Docs can be customized with the following settings:
 
-### Prerequisites
-- Node.js
-- npm
-- Git
-- VS Code
+- **Language Selection**: Change the documentation language to any of nine supported languages including English, French, Spanish, Japanese, and more.
+- **Enable/Disable**: Toggle the extension on/off as needed through settings.
 
-### Setting Up Development Environment
-1. Clone the repository:
-   ```
-   git clone https://github.com/yourusername/mdn-docs.git
-   cd mdn-docs
-   ```
+## Multi-language Support
 
-2. Install dependencies:
-   ```
-   npm install
-   ```
+Access documentation in your preferred language by configuring the `mdn-docs.language` setting:
 
-3. Build the extension:
-   ```
-   npm run compile
-   ```
+- English (US) - default
+- Deutsch
+- Español
+- Français
+- 日本語
+- Português (do Brasil)
+- Русский
+- 中文 (简体)
+- 正體中文 (繁體)
 
-4. Launch in debug mode:
-   - Press F5 in VS Code to launch a new window with your extension loaded
-   - Create/open a JSX/TSX file and hover over an element or attribute
+## Why MDN Docs?
 
-### Development Commands
-- `npm run watch` - Auto-compile changes during development
-- `npm run lint` - Run ESLint
-- `npm run test` - Run tests
-- `npm run package` - Package the extension for distribution
+- **Stay in Your Editor**: No more switching between VS Code and browser windows to look up documentation.
+- **Immediate Knowledge**: Get answers instantly as you code.
+- **Intelligent Context**: The extension recognizes the element/attribute context and provides appropriate documentation.
+- **Automatic Caching**: Documentation is cached locally for faster access and offline usage.
 
-## Contributing
-Contributions are welcome! Please follow these steps:
+## Technical Details
 
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-update`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-update`)
-5. Open a Pull Request
-
-## Resources
-- [MDN Web Docs](https://developer.mozilla.org/)
-- [VS Code Extension API](https://code.visualstudio.com/api)
-- [React Documentation](https://reactjs.org/docs/getting-started.html)
+The extension uses the TypeScript Language Server to identify JSX/TSX elements and attributes, then fetches the relevant documentation from MDN. All documentation is cleanly presented directly in VS Code's hover interface.
 
 ## License
-This project is licensed under the MIT License - see the LICENSE file for details.
+
+This extension is available under the [MIT License](https://github.com/joao-pedro-braz/mdn-docs/blob/main/LICENSE.md).

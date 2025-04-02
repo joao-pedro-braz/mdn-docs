@@ -1,8 +1,9 @@
 {
   "name": "mdn-docs",
-  "displayName": "mdn-docs",
-  "description": "MDN Docs for JSX/TSX",
-  "version": "1.0.1",
+  "displayName": "MDC Docs (JSX/TSX)",
+  "description": "MDN Docs on hover for JSX/TSX",
+  "icon": "icon.png",
+  "version": "1.1.0",
   "engines": {
     "vscode": "^1.98.0"
   },
