@@ -19,60 +19,19 @@ Install by clicking `Install` on the extension page, or from the Extensions side
 
 MDN Docs provides immediate access to official MDN documentation through three main features:
 
-- [**HTML Element Documentation**](#html-element-documentation) &mdash; Hover over any HTML element in JSX/TSX to view its complete documentation including usage, examples, and browser compatibility.
+- [**HTML Documentation**](#html-element-documentation) &mdash; Hover over any HTML element/attribute in JSX/TSX to view its complete documentation including browser compatibility.
 
-- [**Global Attribute Documentation**](#global-attribute-documentation) &mdash; Immediately access information about global attributes that apply to all HTML elements, with details on their function and implementation.
+## Element Documentation
 
-- [**Element-specific Attribute Documentation**](#element-specific-attribute-documentation) &mdash; Get specialized documentation for attributes that are specific to particular HTML elements, helping you use them correctly.
+Instantly see comprehensive information about any HTML element when you hover over it in your JSX/TSX files. Get details on proper usage and compatibility.
 
-## HTML Element Documentation
+![element.png](assets/element.png)
 
-Instantly see comprehensive information about any HTML element when you hover over it in your JSX/TSX files. Get details on proper usage, examples, and compatibility.
-
-```jsx
-function MyComponent() {
-  return (
-    <div>       {/* Hover over 'div' for documentation */}
-      <button>Click me</button>  {/* Hover over 'button' for documentation */}
-    </div>
-  );
-}
-```
-
-## Global Attribute Documentation
-
-Hover over any global HTML attribute to instantly see its documentation, including usage notes and browser compatibility information.
-
-```jsx
-function AccessibleComponent() {
-  return (
-    <div role="region" aria-label="Content section">
-      {/* Hover over 'role' or 'aria-label' to see their documentation */}
-      <p className="description">Text content</p>
-      {/* Hover over 'className' to understand the HTML 'class' attribute */}
-    </div>
-  );
-}
-```
-
-## Element-specific Attribute Documentation
+## Attribute Documentation
 
 Get detailed information about element-specific attributes by hovering over them in your code.
 
-```jsx
-function FormComponent() {
-  return (
-    <form onSubmit={handleSubmit}>
-      <input 
-        type="text"    {/* Hover over 'type' for input-specific documentation */}
-        placeholder="Enter your name"  {/* Hover over 'placeholder' */}
-        required       {/* Hover over 'required' */}
-      />
-      <button type="submit">Submit</button>
-    </form>
-  );
-}
-```
+![attribute](assets/attribute.png)
 
 ## Configuration Options
 
@@ -104,7 +63,7 @@ Access documentation in your preferred language by configuring the `mdn-docs.lan
 
 ## Technical Details
 
-The extension uses the TypeScript Language Server to identify JSX/TSX elements and attributes, then fetches the relevant documentation from MDN. All documentation is cleanly presented directly in VS Code's hover interface.
+The extension uses the TypeScript Language Server to identify JSX/TSX elements and attributes, then fetches the relevant documentation from MDN. It also uses [`@mdn/browser-compat-data`](https://www.npmjs.com/package/@mdn/browser-compat-data) for the browser compatibility data All documentation is cleanly presented directly in VS Code's hover interface.
 
 ## License
 
