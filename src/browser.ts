@@ -35,7 +35,7 @@ export class BrowserCompatDataLoader {
      * @returns The parsed compatibility data for the element, or undefined if no data is found
      */
     public getBrowserCompatDataForElement(element: string) {
-        const compat = bcd.html.elements[element.toLowerCase()]?.__compat
+        const compat = bcd.html.elements[element.toLowerCase()]?.__compat;
         if (!compat) {
             this.log(`No compat data found for element: ${element}`);
             return undefined;
@@ -51,7 +51,7 @@ export class BrowserCompatDataLoader {
      * @returns The parsed compatibility data for the attribute, or undefined if no data is found.
      */
     public getBrowserCompatDataForGlobalAttribute(element: string) {
-        const compat = bcd.html.global_attributes[element.toLowerCase()]?.__compat
+        const compat = bcd.html.global_attributes[element.toLowerCase()]?.__compat;
         if (!compat) {
             this.log(`No compat data found for global attribute: ${element}`);
             return undefined;
@@ -68,7 +68,7 @@ export class BrowserCompatDataLoader {
      * @returns Browser compatibility data for the specified element attribute, or undefined if no data is found
      */
     public getBrowserCompatDataForElementAttribute(element: string, attribute: string) {
-        const compat = bcd.html.elements[element.toLowerCase()][attribute.toLowerCase()]?.__compat
+        const compat = bcd.html.elements[element.toLowerCase()][attribute.toLowerCase()]?.__compat;
         if (!compat) {
             this.log(`No compat data found for element: ${element}`);
             return undefined;

@@ -31,7 +31,7 @@ export class JsxElementAttributeHoverProvider extends BaseHoverProvider {
 
         const tagName = this.determineTagName(quickInfo);
         if (tagName) {
-            model.meta = { ...model.meta, tagName }
+            model.meta = { ...model.meta, tagName };
         }
 
         return true;
@@ -60,7 +60,7 @@ export class JsxElementAttributeHoverProvider extends BaseHoverProvider {
 
         return interfaceName.text.endsWith("HTMLAttributes")
             ? interfaceName.text.split("HTMLAttributes")[0]
-            : undefined
+            : undefined;
     }
 
 }
