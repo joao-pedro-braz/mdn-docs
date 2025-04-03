@@ -214,6 +214,14 @@ export class MdnDocsLoader {
             anchor.setAttribute("href", `https://developer.mozilla.org${href}`);
         });
 
+        // Remove unwanted elements by their classes 
+        const forbiddenClasses = ["code-example"];
+        forbiddenClasses.flatMap(
+            className => this.nodeManipulator.getElementsByClassName(document, className)
+        ).forEach(
+            element => this.nodeManipulator.removeNode(element)
+        );
+
         // Remove non-allowed tags
         const allowedTags = ['a', 'code', 'div', 'p', 'span', 'strong'];
         this.nodeManipulator.walkRecursive(document, node => {

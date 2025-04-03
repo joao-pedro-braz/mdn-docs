@@ -2,6 +2,12 @@
 
 All notable changes to the MDN Docs extension will be documented in this file.
 
+## [1.2.3]
+
+### Added
+- Added automatic transformation of `className` to `class` for improved MDN documentation
+- Improved documentation display by removing code examples from MDN content
+
 ## [1.2.1]
 
 ### Added

@@ -20,7 +20,6 @@ export class JsxGlobalAttributeHoverProvider extends BaseHoverProvider {
             return false;
         }
 
-        this.log(JSON.stringify(quickInfo.displayParts));
         const jsxPartIndex = quickInfo.displayParts.findIndex(part => part.text === 'HTMLAttributes' && part.kind === 'interfaceName');
         if (jsxPartIndex === -1) {
             this.log(`Not a JSX attribute for ${model.toString()}`);
@@ -28,6 +27,12 @@ export class JsxGlobalAttributeHoverProvider extends BaseHoverProvider {
         }
 
         this.log(`Found JSX attribute for ${model.toString()}`);
+
+        if (model.word === 'className') {
+            this.log(`HACK: Transformed className into class`);
+            model.word = 'class';
+        }
+
         return true;
     }
 
@@ -38,9 +43,8 @@ export class JsxGlobalAttributeHoverProvider extends BaseHoverProvider {
             return undefined;
         }
 
-        const hoverContent = new Hover(docs);
         this.log(`Created hover content for ${model.word}`);
-        return hoverContent;
+        return new Hover(docs);
     }
 
 }

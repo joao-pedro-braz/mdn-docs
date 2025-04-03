@@ -3,7 +3,7 @@
   "displayName": "MDN Docs (JSX/TSX)",
   "description": "MDN Docs on hover for JSX/TSX",
   "icon": "icon.png",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "engines": {
     "vscode": "^1.98.0"
   },
