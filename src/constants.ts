@@ -9,4 +9,4 @@ export enum ExtensionSetting {
     language = 'language'
 }
 
-export const EXTENSION_VERSION = '1.0.1';
+export const EXTENSION_VERSION = '1.0.27';

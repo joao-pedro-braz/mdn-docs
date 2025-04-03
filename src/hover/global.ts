@@ -5,6 +5,8 @@ import { MdnDocsLoader } from "../mdn";
 import type { Model } from "../model";
 import { TypescriptServer } from "../typescript";
 import { BaseHoverProvider } from "./base";
+import { NodeManipulator } from "../node";
+import { BrowserCompatDataLoader } from "../browser";
 
 export class JsxGlobalAttributeHoverProvider extends BaseHoverProvider {
     public get name(): string {
@@ -49,7 +51,12 @@ export function register(outputChannel: OutputChannel) {
         new JsxGlobalAttributeHoverProvider(
             outputChannel,
             new TypescriptServer(outputChannel),
-            new MdnDocsLoader(outputChannel, CacheStorageService.getInstance())
+            new MdnDocsLoader(
+                outputChannel,
+                new NodeManipulator(outputChannel),
+                new BrowserCompatDataLoader(outputChannel),
+                CacheStorageService.getInstance()
+            )
         )
     );
 }

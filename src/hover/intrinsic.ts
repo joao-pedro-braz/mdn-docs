@@ -5,6 +5,8 @@ import { TypescriptServer } from '../typescript';
 import { BaseHoverProvider } from "./base";
 import { MdnDocsLoader } from "../mdn";
 import { CacheStorageService } from "../cache";
+import { NodeManipulator } from "../node";
+import { BrowserCompatDataLoader } from "../browser";
 
 export class JsxIntrinsicElementHoverProvider extends BaseHoverProvider {
     public get name(): string {
@@ -56,7 +58,12 @@ export function register(outputChannel: OutputChannel) {
         new JsxIntrinsicElementHoverProvider(
             outputChannel,
             new TypescriptServer(outputChannel),
-            new MdnDocsLoader(outputChannel, CacheStorageService.getInstance())
+            new MdnDocsLoader(
+                outputChannel,
+                new NodeManipulator(outputChannel),
+                new BrowserCompatDataLoader(outputChannel),
+                CacheStorageService.getInstance()
+            )
         )
     );
 }

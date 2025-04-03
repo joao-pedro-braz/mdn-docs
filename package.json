@@ -1,9 +1,9 @@
 {
   "name": "mdn-docs",
-  "displayName": "MDC Docs (JSX/TSX)",
+  "displayName": "MDN Docs (JSX/TSX)",
   "description": "MDN Docs on hover for JSX/TSX",
   "icon": "icon.png",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "engines": {
     "vscode": "^1.98.0"
   },
@@ -74,8 +74,10 @@
     "test": "vscode-test"
   },
   "devDependencies": {
+    "@types/lodash": "^4.17.16",
     "@types/mocha": "^10.0.10",
     "@types/node": "20.x",
+    "@types/sinon": "^17.0.4",
     "@types/vscode": "^1.98.0",
     "@typescript-eslint/eslint-plugin": "^8.28.0",
     "@typescript-eslint/parser": "^8.28.0",
@@ -85,9 +87,13 @@
     "esbuild": "^0.25.1",
     "eslint": "^9.23.0",
     "npm-run-all": "^4.1.5",
+    "sinon": "^20.0.0",
     "typescript": "^5.8.2"
   },
   "dependencies": {
-    "@xmldom/xmldom": "^0.9.8"
+    "@mdn/browser-compat-data": "^6.0.2",
+    "@xmldom/xmldom": "^0.9.8",
+    "lodash": "^4.17.21",
+    "yup": "^1.6.1"
   }
 }
